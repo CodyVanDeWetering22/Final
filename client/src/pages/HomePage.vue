@@ -1,43 +1,62 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="container-fluid">
+    <div v-if="account" class="dropdown text-center my-5">
+      <button class="btn btn-warning dropdown-toggle" title="Create Vaults or Keeps" type="button"
+        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Create
+      </button>
+
+      <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton1">
+
+
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createKeepModal">
+          Create Keep
+        </button>
+
+
+        <li><a class="dropdown-item" title="Create Vault" href="#"><button class="btn btn-warning"> Create
+              Vault</button></a></li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <div v-for="keep in keeps" :key="keep.id" class="col-6 col-md-3 my-3">
+        <KeepsCard :keepProp="keep" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { computed, onMounted } from 'vue';
+import { AppState } from '../AppState.js';
+import Pop from '../utils/Pop.js';
+import { keepsService } from '../services/KeepsService.js'
+import { logger } from '../utils/Logger.js';
+import KeepsCard from '../components/KeepsCard.vue';
+
+
 export default {
   setup() {
-    return {
-      
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps()
+        logger.log('cooking')
+      } catch (error) {
+        Pop.error(error)
+      }
     }
-  }
+
+    onMounted(() =>
+      getKeeps())
+    return {
+      account: computed(() => AppState.account),
+      keeps: computed(() => AppState.keeps),
+      keepImg: computed(() => `url(${props.keepProp.img})`)
+    }
+  },
+  components: { KeepsCard }
 }
 </script>
 
-<style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
-
-  .home-card {
-    width: clamp(500px, 50vw, 100%);
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
-}
-</style>
+<style scoped lang="scss"></style>
