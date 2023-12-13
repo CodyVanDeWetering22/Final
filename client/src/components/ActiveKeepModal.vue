@@ -50,7 +50,9 @@
                             id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             Different vaults
                         </button>
+
                         <img class="rounded-circle profile ms-5" :src="activeKeep.creator?.picture" alt="">
+
                     </div>
 
                 </div>
@@ -67,6 +69,7 @@ import Pop from '../utils/Pop.js';
 import { keepsService } from '../services/KeepsService.js';
 import { Modal } from 'bootstrap';
 import { logger } from '../utils/Logger.js';
+import ProfilePage from '../pages/ProfilePage.vue';
 
 export default {
     setup() {
@@ -74,6 +77,7 @@ export default {
 
             activeKeep: computed(() => AppState.activeModal),
             account: computed(() => AppState.account),
+            profile: computed(() => AppState.profile),
 
 
             async destroyKeep() {

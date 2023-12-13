@@ -86,11 +86,13 @@ public class VaultsController : ControllerBase
     }
 
     [HttpGet("{vaultId}/keeps")]
-    public ActionResult<List<KeepInVault>> GetVaultKeeps(int vaultId)
+    public async Task<ActionResult<List<KeepInVault>>> GetVaultKeeps(int vaultId)
     {
         try
         {
-            List<KeepInVault> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId);
+            // FIXME you need to check who the loggedin user is
+            Account userInfo = await _a0.GetUserInfoAsync<Account>(HttpContext);
+            List<KeepInVault> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId, userInfo.Id);
             return Ok(vaultKeeps);
         }
         catch (Exception exception)

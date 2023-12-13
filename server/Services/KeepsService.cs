@@ -41,7 +41,7 @@ public class KeepsService
         {
             throw new Exception($"Invalid Id: {keepId}");
         }
-        _repository.GetKeepById(keepId);
+        // _repository.GetKeepById(keepId);
         return keep;
     }
 
@@ -59,9 +59,17 @@ public class KeepsService
         return keeps;
     }
 
+    internal List<Keep> GetKeepsByProfile(string profileId)
+    {
+        List<Keep> keeps = _repository.GetKeepsByProfile(profileId);
+
+        return keeps;
+    }
+
     internal Keep UpdateKeep(int keepId, string userId, Keep keepData)
     {
         Keep keepToUpdate = GetKeepById(keepId, userId);
+
         if (keepToUpdate.CreatorId != userId)
         {
             throw new Exception("not ur keep!");

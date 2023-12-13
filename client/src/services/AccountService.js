@@ -12,6 +12,18 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+
+  async getMyVaults() {
+    // TODO implement this
+    console.log('You need to go get your own vaults')
+  }
+  async getMyKeeps() {
+    console.log('You need to go get your own keeps')
+
+  }
+
+
 }
 
 export const accountService = new AccountService()

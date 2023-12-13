@@ -1,5 +1,6 @@
 
 
+
 namespace Final.Services;
 
 public class VaultsService
@@ -45,6 +46,20 @@ public class VaultsService
         }
 
         return vault;
+    }
+
+    internal List<Vault> GetVaultsByAccount(string userId)
+    {
+        List<Vault> vaults = _repository.GetVaultsByAccount(userId);
+        return vaults;
+    }
+
+    internal List<Vault> GetVaultsByProfile(string profileId, string userId)
+    {
+        List<Vault> vaults = _repository.GetVaultsByProfile(profileId);
+        vaults = vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userId);
+
+        return vaults;
     }
 
     internal Vault UpdateVault(int vaultId, string userId, Vault vaultData)

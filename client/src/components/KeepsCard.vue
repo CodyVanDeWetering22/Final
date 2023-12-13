@@ -6,7 +6,10 @@
             <ActiveKeepModal />
         </div>
         <p class="fs-4">{{ keepProp.name }}</p>
-        <img class="rounded-circle profile shadow" :src="keepProp.creator.picture" alt="">
+
+        <router-link :to="{ name: 'ProfilePage', params: { profileId: keepProp.creator.id } }">
+            <img class="rounded-circle profile shadow" :src="keepProp.creator.picture" alt="">
+        </router-link>
     </div>
 </template>
 

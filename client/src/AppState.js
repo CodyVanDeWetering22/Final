@@ -10,7 +10,14 @@ export const AppState = reactive({
   keeps: [],
 
   /** @type {import('./models/Keep.js').Keep | null} */
-  activeModal: {}
+  activeModal: {},
 
+
+  profile: null,
+
+  /** @type {import('./models/Vault.js').Vault[]} */
+  vaults: []
+
+  // TODO you probably are going to need to add something like accountvaults/accountkeeps/profilekeeps/profilevaults
 
 })

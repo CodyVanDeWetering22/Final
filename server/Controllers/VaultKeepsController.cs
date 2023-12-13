@@ -22,7 +22,10 @@ public class VaultKeepsController : ControllerBase
         {
             Account userInfo = await _a0.GetUserInfoAsync<Account>(HttpContext);
             vaultKeepData.CreatorId = userInfo.Id;
-            VaultKeep vaultKeep = _vaultKeepService.CreateVaultKeep(vaultKeepData);
+
+            // FIXME you need to verify the user can put items in this vault
+
+            VaultKeep vaultKeep = _vaultKeepService.CreateVaultKeep(vaultKeepData, userInfo.Id);
             return Ok(vaultKeep);
         }
         catch (Exception exception)

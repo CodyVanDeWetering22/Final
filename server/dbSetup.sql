@@ -60,3 +60,15 @@ SELECT
 FROM vaultkeeps
     JOIN accounts ON vaultkeeps.creatorId = accounts.id
 WHERE vaultkeeps.id = @vaultkeepId
+
+SELECT * FROM accounts WHERE id = @profileId;
+
+SELECT keeps.*, accounts.*
+FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+WHERE keeps.creatorId = @profileId
+
+SELECT vaults.*, accounts.*
+FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+WHERE vaults.creatorId = @profileId

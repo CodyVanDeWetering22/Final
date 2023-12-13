@@ -8,7 +8,7 @@ class KeepsService {
 
     async getKeeps() {
         const res = await api.get('api/keeps')
-        logger.log(res.data)
+        logger.log("this is keeps", res.data)
         const newKeeps = res.data.map(pojo => new Keep(pojo))
         AppState.keeps = newKeeps
     }
