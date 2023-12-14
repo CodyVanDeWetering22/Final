@@ -2,7 +2,7 @@
     <div v-if="profile" class="container-fluid">
         <div class="row justify-content-evenly">
             <div class="col-12 text-center mt-4">
-                <img :src="profile.coverImg" alt="">
+                <img class="img-fluid coverImg mb-5" :src="profile.coverImg" alt="">
                 <img :src="profile.picture" alt="">
                 <h1>{{ profile.name }}</h1>
             </div>
@@ -11,31 +11,33 @@
     <div class="row mt-5">
         <h1>Vaults</h1>
         <div v-for="vault in vaults" :key="vault.id" class="col-4 mt-5 ps-4 fs-3">
-            <img class="imgCard shadow" :src="vault.img" alt="">
-            <p> {{ vault.name }}</p>
-
+            <div v-if="vault.isPrivate == false">
+                <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
+                    <img class="imgCard shadow" :src="vault.img" alt="">
+                </router-link>
+                <p> {{ vault.name }}</p>
+            </div>
         </div>
 
-        <div class="row mt-4 justify-content-evenly">
-            <h1>Keeps</h1>
-            <div v-for="keep in keeps" :key="keep.id" class="col-3">
+    </div>
+
+    <div class="row mt-4 justify-content-evenly">
+        <h1>Keeps</h1>
+        <div v-for="keep in keeps" :key="keep.id" class="col-3">
+            <div>
                 <div>
-                    <div>
-                        <img class="img-fluid imgCard shadow" :src="keep.img" alt="">
-                    </div>
-                    <p class="fs-4">{{ keep.name }}</p>
-
-                    <img class="rounded-circle profile shadow" :src="keep.creator.picture" alt="">
-
-
+                    <img class="img-fluid imgCard shadow" :src="keep.img" alt="">
                 </div>
+                <p class="fs-4">{{ keep.name }}</p>
+
+                <img class="rounded-circle profile shadow" :src="keep.creator.picture" alt="">
+
 
             </div>
 
-
-
-
         </div>
+
+
 
 
     </div>
@@ -108,6 +110,7 @@ export default {
         }
         return {
             profile: computed(() => AppState.profile),
+            account: computed(() => AppState.account),
             keeps: computed(() => AppState.keeps),
             vaults: computed(() => AppState.vaults)
         };
@@ -140,5 +143,11 @@ p {
     left: 5px;
     color: #ffea00f1;
     text-shadow: 3px 3px 3px black;
+}
+
+.coverImg {
+    height: 30vh;
+    width: 100%;
+    object-fit: cover;
 }
 </style>

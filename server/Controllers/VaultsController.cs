@@ -41,7 +41,7 @@ public class VaultsController : ControllerBase
         try
         {
             Account userInfo = await _a0.GetUserInfoAsync<Account>(HttpContext);
-            Vault vault = _vaultsService.GetVaultById(vaultId, userInfo?.Id);
+            Vault vault = _vaultKeepsService.GetVaultById(vaultId, userInfo?.Id);
             return vault;
         }
         catch (Exception exception)
@@ -90,9 +90,8 @@ public class VaultsController : ControllerBase
     {
         try
         {
-            // FIXME you need to check who the loggedin user is
             Account userInfo = await _a0.GetUserInfoAsync<Account>(HttpContext);
-            List<KeepInVault> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId, userInfo.Id);
+            List<KeepInVault> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId, userInfo?.Id);
             return Ok(vaultKeeps);
         }
         catch (Exception exception)

@@ -50,13 +50,14 @@ public class AccountController : ControllerBase
     }
   }
   [Authorize]
-  [HttpPut("{accountId}")]
-  public async Task<ActionResult<List<Account>>> Edit(int accountId, [FromBody] Account accountData)
+  [HttpPut]
+  public async Task<ActionResult<Account>> EditAccount([FromBody] Account editData)
   {
     try
     {
       Account userInfo = await _a0.GetUserInfoAsync<Account>(HttpContext);
-      Account account = _accountService.Edit(accountId, userInfo.Id, accountData);
+      string userEmail = userInfo.Email;
+      Account account = _accountService.Edit(editData, userEmail);
       return Ok(account);
 
     }

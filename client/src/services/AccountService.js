@@ -13,16 +13,24 @@ class AccountService {
     }
   }
 
-
+  async editAccount(accountData) {
+    logger.log(accountData)
+    const res = await api.put('/account', accountData)
+    logger.log("updating?", res.data)
+    AppState.account = new Account(res.data)
+  }
   async getMyVaults() {
     // TODO implement this
+    // SAVE the response to my Vaults
     console.log('You need to go get your own vaults')
+
   }
+
+
+
   async getMyKeeps() {
-    console.log('You need to go get your own keeps')
 
   }
-
 
 }
 

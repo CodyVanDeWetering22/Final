@@ -34,7 +34,7 @@ CREATE TABLE
         name CHAR(50) NOT NULL,
         description VARCHAR(500) NOT NULL,
         img VARCHAR(1000) NOT NULL,
-        isPrivate BOOL NOT NULL DEFAULT false,
+        isPrivate BOOL DEFAULT false,
         creatorId VARCHAR(255) NOT NULL,
         FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
@@ -72,3 +72,10 @@ SELECT vaults.*, accounts.*
 FROM vaults
     JOIN accounts ON accounts.id = vaults.creatorId
 WHERE vaults.creatorId = @profileId
+
+UPDATE accounts
+SET
+    name = @Name,
+    picture = @Picture,
+    coverImg = @CoverImg
+WHERE id = @Id;

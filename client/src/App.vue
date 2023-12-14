@@ -6,6 +6,7 @@
     <router-view />
   </main>
   <KeepFormModal />
+  <VaultsFormModal />
 </template>
 
 <script>
@@ -13,6 +14,7 @@ import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import KeepFormModal from './components/KeepFormModal.vue'
+import VaultsFormModal from './components/VaultsFormModal.vue'
 
 
 export default {
@@ -21,7 +23,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar, KeepFormModal }
+  components: { Navbar, KeepFormModal, VaultsFormModal }
 }
 </script>
 <style lang="scss">

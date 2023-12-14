@@ -31,8 +31,6 @@ class KeepsService {
     async destroyKeep(keepId) {
         const res = await api.delete(`api/keeps/${keepId}`)
         logger.log(res.data)
-
-
     }
 
 }

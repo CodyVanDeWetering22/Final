@@ -93,7 +93,7 @@ public class KeepsRepository
     UPDATE keeps
     SET
     name = @Name,
-    description =@description,
+    description = @Description,
     img = @Img,
     views = @Views
     WHERE id = @Id;

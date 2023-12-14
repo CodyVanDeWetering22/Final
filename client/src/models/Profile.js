@@ -3,9 +3,6 @@ export class Profile {
         this.id = data.id
         this.name = data.name
         this.picture = data.picture
-        this.coverImg = data.coverImg
-        this.creator = data.creator
-        this.creatorId = data.creatorId
     }
 
 }

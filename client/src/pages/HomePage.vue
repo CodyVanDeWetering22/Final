@@ -13,9 +13,9 @@
           Create Keep
         </button>
 
-
-        <li><a class="dropdown-item" title="Create Vault" href="#"><button class="btn btn-warning"> Create
-              Vault</button></a></li>
+        <button type="button" class="btn btn-warning ps-1" data-bs-toggle="modal" data-bs-target="#createVaultModal">
+          Create Vault
+        </button>
       </ul>
     </div>
 

@@ -13,17 +13,19 @@ public class VaultKeepService
     private readonly VaultKeepRepository _repository;
     private readonly VaultsService _vaultService;
     private readonly VaultsRepository _vaultRepository;
+    private readonly KeepsService _keepsService;
 
-    public VaultKeepService(VaultKeepRepository repository, VaultsService vaultService = null, VaultsRepository vaultRepository = null)
+    public VaultKeepService(VaultKeepRepository repository, VaultsService vaultService = null, VaultsRepository vaultRepository = null, KeepsService keepsService = null)
     {
         _repository = repository;
         _vaultService = vaultService;
         _vaultRepository = vaultRepository;
+        _keepsService = keepsService;
     }
 
     internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId)
     {
-        // FIXME make sure the user is the creator of the vault
+
         Vault vault = GetVaultById(vaultKeepData.VaultId, userId);
 
         if (vault.CreatorId != userId)
@@ -33,6 +35,11 @@ public class VaultKeepService
         VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
         return vaultKeep;
     }
+
+
+
+
+
     internal Vault GetVaultById(int vaultId, string userId)
     {
         Vault vault = _vaultRepository.GetVaultById(vaultId);
@@ -69,13 +76,11 @@ public class VaultKeepService
 
     internal List<KeepInVault> GetVaultKeeps(int vaultId, string userId)
     {
-        // FIXME before getting the vaultkeeps get the vault to make sure the user has access to it
-
 
         Vault vault = _vaultRepository.GetVaultById(vaultId);
-        if (vault.CreatorId != userId)
+        if (vault.CreatorId != userId && vault.IsPrivate == true)
         {
-            throw new Exception("cant");
+            throw new Exception("Unable to get keeps for a private vault");
         }
         List<KeepInVault> vaultKeeps = _repository.GetVaultKeeps(vaultId);
         return vaultKeeps;
