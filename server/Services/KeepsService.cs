@@ -82,4 +82,9 @@ public class KeepsService
         Keep keep = _repository.UpdateKeep(keepToUpdate);
         return keep;
     }
+
+    internal void UpdateKeepKept(Keep keepData)
+    {
+        Keep keep = _repository.UpdateKeep(keepData);
+    }
 }

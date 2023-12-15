@@ -42,7 +42,7 @@ public class VaultsService
         }
         if (vault.IsPrivate == true && vault.CreatorId != userId)
         {
-            throw new Exception("Something went wrong!");
+            throw new Exception("Something went wrong 😊!");
         }
 
         return vault;

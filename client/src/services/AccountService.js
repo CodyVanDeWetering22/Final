@@ -1,7 +1,9 @@
+import { Value } from 'sass'
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
+import { Vault } from '../models/Vault.js'
 
 class AccountService {
   async getAccount() {
@@ -19,11 +21,12 @@ class AccountService {
     logger.log("updating?", res.data)
     AppState.account = new Account(res.data)
   }
-  async getMyVaults() {
-    // TODO implement this
-    // SAVE the response to my Vaults
-    console.log('You need to go get your own vaults')
+  async getMyAccountVaults() {
 
+    const res = await api.get('/account/vaults')
+    console.log('You need to go get your own vaults', res.data)
+    AppState.myVaults = res.data.map(pojo => new Vault(pojo))
+    logger.log(AppState.myVaults)
   }
 
 

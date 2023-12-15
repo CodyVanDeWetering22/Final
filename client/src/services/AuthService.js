@@ -27,11 +27,11 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function () {
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)
   // NOTE if there is something you want to do once the user is authenticated, place that here
-  // TODO go get all of your account vaults
 
-  // FIXME implement these methods
-  accountService.getMyVaults()
-  accountService.getMyKeeps()
+
+
+  await accountService.getMyAccountVaults()
+
 
 })
 

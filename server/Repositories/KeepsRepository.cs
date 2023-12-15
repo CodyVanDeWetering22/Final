@@ -4,6 +4,7 @@
 
 
 
+
 namespace Final.Repositories;
 
 public class KeepsRepository
@@ -95,6 +96,7 @@ public class KeepsRepository
     name = @Name,
     description = @Description,
     img = @Img,
+    kept = @Kept,
     views = @Views
     WHERE id = @Id;
     
@@ -114,6 +116,8 @@ public class KeepsRepository
 
 
     }
+
+
 
     private Keep KeepBuilder(Keep keep, Profile profile)
     {

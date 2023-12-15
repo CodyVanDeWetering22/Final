@@ -22,8 +22,9 @@
                             <input required v-model="editable.img" type="text" class="form-control" id="img">
                         </div>
                         <div class="form-check">
-                            <input default="false" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label v-bind="editable.isPrivate" class="form-check-label" for="flexCheckDefault">
+                            <input v-model="editable.isPrivate" default="false" class="form-check-input" type="checkbox"
+                                value="" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
                                 Private?
                             </label>
                         </div>
@@ -46,6 +47,7 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import { vaultsService } from '../services/VaultsService.js';
 import { Modal } from 'bootstrap';
 import Pop from '../utils/Pop.js';
+import { logger } from '../utils/Logger.js';
 export default {
     setup() {
         const editable = ref({})
@@ -55,8 +57,17 @@ export default {
             async createVault() {
                 try {
                     const vaultData = editable.value
+
+
+                    if (vaultData.isPrivate == undefined) {
+                        logger.log("is private not set")
+                        vaultData.isPrivate = false
+                    }
+                    logger.log(vaultData)
+
                     await vaultsService.createVault(vaultData)
                     editable.value = {}
+
                     Modal.getOrCreateInstance('#createVaultModal').hide()
                 } catch (error) {
                     Pop.error(error)

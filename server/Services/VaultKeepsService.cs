@@ -13,6 +13,7 @@ public class VaultKeepService
     private readonly VaultKeepRepository _repository;
     private readonly VaultsService _vaultService;
     private readonly VaultsRepository _vaultRepository;
+
     private readonly KeepsService _keepsService;
 
     public VaultKeepService(VaultKeepRepository repository, VaultsService vaultService = null, VaultsRepository vaultRepository = null, KeepsService keepsService = null)
@@ -27,6 +28,11 @@ public class VaultKeepService
     {
 
         Vault vault = GetVaultById(vaultKeepData.VaultId, userId);
+        Keep keep = _keepsService.GetKeepById(vaultKeepData.KeepId, userId);
+        keep.Kept++;
+        _keepsService.UpdateKeepKept(keep);
+
+
 
         if (vault.CreatorId != userId)
         {

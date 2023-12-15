@@ -8,6 +8,7 @@
                         <div class="col-12 d-flex justify-content-between">
                             <div>
                                 <i class="mdi mdi-eye">{{ activeKeep.views }}</i>
+                                <i class=" mdi mdi-plus">{{ activeKeep.kept }}</i>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -46,10 +47,13 @@
                     </div>
 
                     <div v-if="activeKeep" class="text-end">
-                        <button class="btn btn-warning dropdown-toggle" title="Create Vaults or Keeps" type="button"
-                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Different vaults
-                        </button>
+                        <form @submit.prevent="createVaultKeep(activeKeep.id)">
+                            <select v-model="editable.vaultId" class="form-select" aria-label="Default select example">
+                                <option :value="vault.id" v-for="vault in myVaults" :key="vaultId">{{ vault.name }}
+                                </option>
+                            </select>
+                            <button type="submit">Submit</button>
+                        </form>
 
                         <img class="rounded-circle profile ms-5" :src="activeKeep.creator?.picture" alt="">
 
@@ -64,20 +68,25 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { keepsService } from '../services/KeepsService.js';
 import { Modal } from 'bootstrap';
 import { logger } from '../utils/Logger.js';
 import ProfilePage from '../pages/ProfilePage.vue';
+import { vaultKeepsService } from '../services/VaultKeepsService.js';
 
 export default {
     setup() {
-        return {
 
+        const editable = ref({})
+
+        return {
+            editable,
             activeKeep: computed(() => AppState.activeModal),
             account: computed(() => AppState.account),
             profile: computed(() => AppState.profile),
+            myVaults: computed(() => AppState.myVaults),
 
 
             async destroyKeep() {
@@ -91,6 +100,18 @@ export default {
                     const keepId = AppState.activeModal.id
                     logger.log(`this is the delete id ${keepId}`)
                     await keepsService.destroyKeep(keepId)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
+            async createVaultKeep(keepId) {
+                try {
+                    const vaultKeepData = editable.value
+                    vaultKeepData.keepId = keepId
+                    logger.log('this is the keepid ', vaultKeepData)
+                    await vaultKeepsService.createVaultKeep(vaultKeepData)
+                    Modal.getOrCreateInstance('#ActiveKeep').hide()
                 } catch (error) {
                     Pop.error(error)
                 }

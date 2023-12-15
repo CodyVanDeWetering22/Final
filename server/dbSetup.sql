@@ -79,3 +79,17 @@ SET
     picture = @Picture,
     coverImg = @CoverImg
 WHERE id = @Id;
+
+SELECT keeps.*, accounts.*
+FROM keeps
+    JOIN accounts On accounts.id = keeps.creatorId
+WHERE keeps.id = @Id;
+
+UPDATE keeps
+SET
+    name = @Name,
+    description = @Description,
+    img = @Img,
+    kept - @Kept,
+    views = @Views
+WHERE id = @Id

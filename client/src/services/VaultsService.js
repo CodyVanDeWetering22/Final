@@ -5,10 +5,10 @@ import { api } from "./AxiosService.js"
 
 class VaultsService {
     async getVault(vaultId) {
-        AppState.activeVault = null
         const res = await api.get(`api/vaults/${vaultId}`)
         console.log("this is the vault", res.data);
-        AppState.activeVault = new Vault(pojo => new Vault(pojo))
+        AppState.activeVault = new Vault(res.data)
+        logger.log(`vault in appstate`, AppState.activeVault)
     }
 
     async createVault(vaultData) {
@@ -17,10 +17,10 @@ class VaultsService {
         AppState.myVaults.push(new Vault(res.data))
     }
 
-
-    // TODO add keep to vault
-    // TODO get keeps in vault
-    // TODO remove a keep from the vault
+    async destroyVault(vaultId) {
+        const res = await api.delete(`api/vaults/${vaultId}`)
+        logger.log("deleted", res.data)
+    }
 
 
 }

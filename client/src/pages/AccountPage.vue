@@ -45,40 +45,58 @@
     </div>
 
 
-    <div class="container">
+    <div v-if="vault" class="container">
       <h3>My Vaults</h3>
       <div class="row">
-        <div class="col-md-4">
-          <div class="vault" v-for="vault in myVaults">
+        <div>
+          <div v-for="vault in myVaults" :key="vault.id" class="col-md-4 mt-4">
+
+            <div @click="destroyVault(vault.id)" class="mdi mdi-delete" type="button"></div>
+            {{ vault.name }}
             <img :src="vault.img" alt="">
+
+
+
           </div>
+
         </div>
       </div>
     </div>
-
-
-
-
-
   </div>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { accountService } from '../services/AccountService.js';
 import { Modal } from 'bootstrap';
+import { AuthService } from '../services/AuthService.js'
+import { vaultsService } from '../services/VaultsService.js';
+
 export default {
   setup() {
+    async function getMyAccountVaults() {
+      try {
+        await accountService.getMyAccountVaults()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+
     const editable = ref({})
 
+    onMounted(() => {
+      getMyAccountVaults()
+    })
 
     return {
+
       editable,
       account: computed(() => AppState.account),
       myVaults: computed(() => AppState.myVaults),
+      vault: computed(() => AppState.vaults),
 
       async editAccount() {
         try {
@@ -90,8 +108,23 @@ export default {
         } catch (error) {
           Pop.error(error)
         }
-      }
 
+
+
+      },
+      async destroyVault(vaultId) {
+        const yes = await Pop.confirm("are you sure you want to delete that vault")
+        if (!yes) {
+          return
+        }
+        try {
+          await vaultsService.destroyVault(vaultId)
+          logger.log('this is the id you want to delete', vaultId)
+        } catch (error) {
+          Pop.error(error)
+        }
+
+      }
 
 
     }
