@@ -3,7 +3,7 @@
         <div class="row justify-content-evenly">
             <div class="col-12 text-center mt-4">
                 <img class="img-fluid coverImg mb-5" :src="profile.coverImg" alt="">
-                <img :src="profile.picture" alt="">
+                <img class="rounded-circle profilePic" :src="profile.picture" alt="">
                 <h1>{{ profile.name }}</h1>
             </div>
         </div>
@@ -149,5 +149,10 @@ p {
     height: 30vh;
     width: 100%;
     object-fit: cover;
+}
+
+.profilePic {
+    height: 15vh;
+
 }
 </style>

@@ -52,8 +52,11 @@
           <div v-for="vault in myVaults" :key="vault.id" class="col-md-4 mt-4">
 
             <div @click="destroyVault(vault.id)" class="mdi mdi-delete" type="button"></div>
-            {{ vault.name }}
-            <img :src="vault.img" alt="">
+            <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
+              {{ vault.name }}
+              <img :src="vault.img" alt="">
+
+            </router-link>
 
 
 
