@@ -6,7 +6,7 @@
     <img :src="account.coverImg" alt="">
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AccountModal">
-      edit account
+      edit accounts
     </button>
 
 
