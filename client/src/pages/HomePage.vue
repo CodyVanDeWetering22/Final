@@ -3,7 +3,7 @@
     <div v-if="account" class="dropdown text-center my-5">
       <button class="btn btn-warning dropdown-toggle" title="Create Vaults or Keeps" type="button"
         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-        Create Keep
+        Create keeps
       </button>
 
       <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton1">
