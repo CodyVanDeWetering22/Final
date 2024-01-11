@@ -10,7 +10,7 @@
 
 
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#createKeepModal">
-          Create Keep
+          Create Keeps
         </button>
 
         <button type="button" class="btn btn-warning ps-1" data-bs-toggle="modal" data-bs-target="#createVaultModal">
